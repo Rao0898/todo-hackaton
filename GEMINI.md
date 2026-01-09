@@ -212,6 +212,8 @@ See `.specify/memory/constitution.md` for code quality, testing, performance, se
 ## Active Technologies
 - Python 3.13+ + None (standard Python libraries only) (001-cli-todo)
 - In-memory Python data structures (e.g., dictionaries, lists) (001-cli-todo)
+- Backend: Python 3.13+, Frontend: Node.js v20+ + Backend: FastAPI, psycopg2-binary, passlib, python-jose, python-multipart. Frontend: Next.js, React, TypeScript, Auth.js (002-full-stack-webapp)
+- PostgreSQL (Neon DB) (002-full-stack-webapp)
 
 ## Recent Changes
 - 001-cli-todo: Added Python 3.13+ + None (standard Python libraries only)

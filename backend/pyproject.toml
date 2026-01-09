@@ -1,0 +1,42 @@
+[tool.black]
+line-length = 88
+target-version = ['py310']
+
+[tool.ruff]
+line-length = 88
+select = [
+    "E",  # Error
+    "W",  # Warning
+    "F",  # Pyflakes
+    "C",  # Complexity
+    "N",  # Naming
+    "D",  # Docstrings
+    "UP", # pyupgrade
+    "B",  # Bugbear
+]
+ignore = [
+    "D100", # Missing docstring in public module
+    "D104", # Missing docstring in public package
+    "D105", # Missing docstring in public method
+    "D106", # Missing docstring in public nested class
+    "D107", # Missing docstring in __init__
+]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".ruff_cache",
+    ".svn",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "build",
+    "dist",
+    "venv",
+]
+per-file-ignores = {}

@@ -1,29 +1,17 @@
 <!-- Sync Impact Report:
-Version change: None (initial creation) -> 0.1.0
+Version change: 0.1.0 -> 1.0.0
 List of modified principles:
-  - Initial Principles
+  - V. Architecture of Intelligence (new)
+  - VI. Statelessness (new)
 Added sections:
-  - Development Environment
-  - Phase 1: In-memory CLI Todo
+  - Phase 2: FastAPI, Next.js, Neon DB, Better Auth
+  - Phase 3: AI Chatbot, OpenAI Agents SDK, MCP Server - Stateless
+  - Phase 4: Docker, Minikube, Helm
+  - Phase 5: Kafka, Dapr, Microservices
 Removed sections:
   - None
 Templates requiring updates:
-  - .specify/templates/plan-template.md ⚠ pending
-  - .specify/templates/spec-template.md ⚠ pending
-  - .specify/templates/tasks-template.md ⚠ pending
-  - .specify/commands/sp.adr.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.analyze.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.checklist.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.clarify.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.constitution.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.git.commit_pr.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.implement.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.phr.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.plan.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.reverse-engineer.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.specify.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.tasks.toml ⚠ pending (check for CLAUDE references)
-  - .specify/commands/sp.taskstoissues.toml ⚠ pending (check for CLAUDE references)
+  - None
 Follow-up TODOs: None
 -->
 # The Evolution of Todo Constitution
@@ -34,7 +22,7 @@ Follow-up TODOs: None
 Spec-driven development only (spec → plan → tasks → implement). This ensures a structured and predictable development process, reducing ambiguity and rework.
 
 ### II. AI Agent is Sole Implementer
- An AI coding agent (e.g., Gemini CLI, Claude Code) is the sole implementer; no manual boilerplate coding. This enforces automation and consistency in code generation.
+An AI coding agent (e.g., Gemini CLI, Claude Code) is the sole implementer; no manual boilerplate coding. This enforces automation and consistency in code generation.
 
 ### III. No Features Beyond Approved Specs
 No features, tools, or architecture beyond approved specs. This maintains project scope and prevents feature creep, ensuring focused development.
@@ -42,11 +30,17 @@ No features, tools, or architecture beyond approved specs. This maintains projec
 ### IV. Ask for Clarification
 Ask for clarification if requirements are unclear. This promotes clear communication and reduces assumptions, leading to more accurate implementations.
 
+### V. Architecture of Intelligence
+Design for modular, stateless, and observable AI components. This enables scalable, maintainable, and debuggable intelligent systems.
+
+### VI. Statelessness
+All services and components should be stateless wherever possible. This simplifies scaling, improves resilience, and enhances predictability.
+
 ## Code Standards
 
-*   Clean, modular Python (3.13+ preferred).
+*   Clean, modular code following language-specific best practices.
 *   Clear naming, Single Responsibility Principle (SRP), validation, and error handling.
-*   Deterministic, user-friendly CLI behavior.
+*   Deterministic, user-friendly API and CLI behavior.
 
 These standards ensure high code quality, maintainability, and a consistent user experience.
 
@@ -54,7 +48,7 @@ These standards ensure high code quality, maintainability, and a consistent user
 
 *   One Constitution.md for all phases.
 *   Phase-specific rules belong in specs.
-*   README.md, CLAUDE.md, and spec history are mandatory.
+*   README.md, GEMINI.md, and spec history are mandatory.
 
 This structure provides a clear organizational framework for the project documentation and development artifacts.
 
@@ -62,6 +56,7 @@ This structure provides a clear organizational framework for the project documen
 
 *   WSL 2 (Ubuntu) required.
 *   UV for Python environment management.
+*   Docker and Minikube for containerization and orchestration.
 
 These environment requirements standardize the development setup, minimizing "it works on my machine" issues.
 
@@ -73,8 +68,39 @@ These environment requirements standardize the development setup, minimizing "it
 
 This defines the initial scope and constraints for the first phase of the project, focusing on core CLI functionality without external dependencies.
 
+## Phase 2: FastAPI, Next.js, Neon DB, Better Auth
+
+*   **Backend**: FastAPI with Postgres (Neon DB).
+*   **Frontend**: Next.js with TypeScript.
+*   **Authentication**: Implement a robust authentication mechanism.
+
+This phase evolves the application into a full-stack web service with a persistent data store and secure user access.
+
+## Phase 3: AI Chatbot, OpenAI Agents SDK, MCP Server - Stateless
+
+*   **AI Chatbot**: Integrate an AI-powered chatbot for task management.
+*   **AI Agents**: Utilize the OpenAI Agents SDK for advanced agentic workflows.
+*   **MCP Server**: Implement a stateless Mission Control Plane (MCP) server for managing AI agents and tasks.
+
+This phase introduces artificial intelligence to enhance user interaction and automate complex tasks.
+
+## Phase 4: Docker, Minikube, Helm
+
+*   **Containerization**: Dockerize all services.
+*   **Orchestration**: Use Minikube for local Kubernetes development.
+*   **Deployment**: Manage deployments with Helm charts.
+
+This phase focuses on operational readiness, ensuring the application is scalable, portable, and easy to manage in a cloud-native environment.
+
+## Phase 5: Kafka, Dapr, Microservices
+
+*   **Event-Driven Architecture**: Use Kafka for asynchronous communication.
+*   **Microservices**: Decompose the application into a distributed system of microservices using the Dapr framework.
+
+This phase re-architects the application for maximum scalability, resilience, and flexibility by adopting a microservices-based, event-driven approach.
+
 ## Governance
 
 Constitution is the supreme authority; Amendments require documentation, approval, migration plan; All PRs/reviews must verify compliance; Complexity must be justified.
 
-**Version**: 0.1.0 | **Ratified**: 2025-12-30 | **Last Amended**: 2025-12-30
+**Version**: 1.0.0 | **Ratified**: 2025-12-30 | **Last Amended**: 2026-01-03

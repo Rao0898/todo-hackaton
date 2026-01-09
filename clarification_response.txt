@@ -1,0 +1,23 @@
+The `backend/` folder at the **root of the repository** is the correct location for the FastAPI application, according to the `plan.md` (which is derived from the constitution and specs for this phase).
+
+The `plan.md` explicitly defines the following structure at the repository root:
+
+```
+backend/
+├── src/
+│   ├── models/
+│   ├── services/
+│   └── api/
+└── tests/
+
+frontend/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   └── services/
+└── tests/
+```
+
+And the "Structure Decision" in `plan.md` states: "The `backend/` directory will contain the FastAPI application, and the `frontend/` directory will contain the Next.js application."
+
+Therefore, the `backend/` folder under `phase2/` is not the one to be used for the current implementation of the full-stack web application.
