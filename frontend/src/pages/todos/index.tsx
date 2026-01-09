@@ -21,11 +21,14 @@ const TodosPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
+  // API URL from environment variables
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const fetchTodos = useCallback(async () => {
-    if (session?.accessToken) {
+    if (session?.accessToken && API_URL) {
       setLoading(true);
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/todos/`, {
+        const response = await fetch(`${API_URL}/todos/`, {
           headers: {
             Authorization: `Bearer ${session.accessToken}`,
           },
@@ -48,10 +51,11 @@ const TodosPage = () => {
         setLoading(false);
       }
     }
-  }, [session, router]);
+  }, [session, router, API_URL]);
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
+    // FIX: Type cast status to string to avoid Vercel build error
+    if ((status as string) === 'unauthenticated') {
       router.push('/login');
     }
     if (status === 'authenticated' && session?.accessToken) {
@@ -61,10 +65,10 @@ const TodosPage = () => {
 
   const handleAddTodo = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTodoTitle.trim() || !session?.accessToken) return;
+    if (!newTodoTitle.trim() || !session?.accessToken || !API_URL) return;
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/todos/`, {
+      const response = await fetch(`${API_URL}/todos/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,9 +94,9 @@ const TodosPage = () => {
   };
 
   const handleToggleComplete = useCallback(async (id: string, completed: boolean, title: string) => {
-    if (session?.accessToken) {
+    if (session?.accessToken && API_URL) {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/todos/${id}`, {
+        const response = await fetch(`${API_URL}/todos/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.accessToken}` },
           body: JSON.stringify({ title, completed }),
@@ -110,14 +114,14 @@ const TodosPage = () => {
         alert('Failed to update todo status.');
       }
     }
-  }, [session, fetchTodos, router]);
+  }, [session, fetchTodos, router, API_URL]);
 
   const handleEdit = useCallback(async (todo: Todo) => {
     const newTitle = prompt('Enter new title', todo.title);
     if (newTitle && newTitle.trim() && newTitle !== todo.title) {
-      if (session?.accessToken) {
+      if (session?.accessToken && API_URL) {
         try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/todos/${todo.id}`, {
+          const response = await fetch(`${API_URL}/todos/${todo.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session.accessToken}` },
             body: JSON.stringify({ title: newTitle, completed: todo.completed }),
@@ -135,13 +139,13 @@ const TodosPage = () => {
         }
       }
     }
-  }, [session, fetchTodos, router]);
+  }, [session, fetchTodos, router, API_URL]);
 
   const handleDelete = useCallback(async (id: string) => {
     if (confirm('Are you sure?')) {
-      if (session?.accessToken) {
+      if (session?.accessToken && API_URL) {
         try {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/todos/${id}`, {
+          const response = await fetch(`${API_URL}/todos/${id}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${session.accessToken}` },
           });
@@ -158,7 +162,7 @@ const TodosPage = () => {
         }
       }
     }
-  }, [session, fetchTodos, router]);
+  }, [session, fetchTodos, router, API_URL]);
 
   if (status === 'loading' || loading) {
     return (
