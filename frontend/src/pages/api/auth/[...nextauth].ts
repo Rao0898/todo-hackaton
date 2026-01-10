@@ -2,6 +2,9 @@ import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
+// FINAL FIX: Direct Backend URL
+const BACKEND_URL = "https://todo-hackaton-webapp.onrender.com";
+
 const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
@@ -14,9 +17,9 @@ const authOptions: AuthOptions = {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        const res = await fetch(`${backendUrl}/auth/token`, {
+      async authorize(credentials) {
+        // Yahan process.env ki jagah direct URL use kiya hai
+        const res = await fetch(`${BACKEND_URL}/auth/token`, {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -31,7 +34,7 @@ const authOptions: AuthOptions = {
 
         if (res.ok && data.access_token) {
           return {
-            id: data.user_id, // Assuming user_id is returned from backend
+            id: data.user_id,
             email: credentials?.email,
             accessToken: data.access_token,
           };
@@ -44,18 +47,15 @@ const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {
-        // For CredentialsProvider
         if (user.accessToken) {
           token.accessToken = user.accessToken;
           token.id = user.id;
         }
       }
 
-      // If it's a Google sign-in and we have an access token from Google
       if (account && account.provider === "google" && account.access_token) {
-        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-        // Exchange Google's access token for our backend's JWT
-        const res = await fetch(`${backendUrl}/auth/google`, {
+        // Yahan bhi direct URL use kiya hai
+        const res = await fetch(`${BACKEND_URL}/auth/google`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -66,7 +66,7 @@ const authOptions: AuthOptions = {
         const data = await res.json();
         if (res.ok && data.access_token) {
           token.accessToken = data.access_token;
-          token.id = data.user_id; // Assuming user_id is returned from backend for Google auth
+          token.id = data.user_id;
         }
       }
 
