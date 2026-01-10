@@ -4,14 +4,17 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react'; // Import useSession
+import { useSession } from 'next-auth/react';
 
 const SignupPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { status } = useSession(); // Use useSession to check authentication status
+  const { status } = useSession();
+
+  // FINAL FIX: Direct Backend URL
+  const API_URL = "https://todo-hackaton-webapp.onrender.com";
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -23,7 +26,8 @@ const SignupPage = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/`, {
+      // Yahan humne process.env hata kar direct API_URL use kiya hai
+      const response = await fetch(`${API_URL}/users/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,13 +44,12 @@ const SignupPage = () => {
       }
     } catch (error) {
       console.error('Signup error:', error);
-      alert('An error occurred during signup.');
+      alert('An error occurred during signup. Please check your internet or wait for the backend to wake up.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Show loading state if session is still loading
   if (status === 'loading') {
     return (
       <main className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-black text-white font-sans">
@@ -56,7 +59,7 @@ const SignupPage = () => {
   }
 
   return (
-    <main className="flex items-center justify-center min-h-screen text-white font-sans">
+    <main className="flex items-center justify-center min-h-screen text-white font-sans bg-gradient-to-br from-gray-900 to-black">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -71,7 +74,6 @@ const SignupPage = () => {
           <div>
             <input
               type="email"
-              id="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -82,7 +84,6 @@ const SignupPage = () => {
           <div>
             <input
               type="password"
-              id="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

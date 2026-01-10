@@ -22,7 +22,7 @@ const TodosPage = () => {
   const [newTodoTitle, setNewTodoTitle] = useState('');
 
   // API URL from environment variables
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = "https://todo-hackaton-webapp.onrender.com";
 
   const fetchTodos = useCallback(async () => {
     if (session?.accessToken && API_URL) {
